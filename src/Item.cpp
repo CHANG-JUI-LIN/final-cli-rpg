@@ -1,4 +1,6 @@
 #include "Item.h"
+
+#include <algorithm>
 #include <iostream>
 
 using namespace std;
@@ -10,11 +12,11 @@ Item::Item() {
     quantity = 1;
 }
 
-Item::Item(string name, string type, int effectValue, int quantity) {
+Item::Item(const string& name, const string& type, int effectValue, int quantity) {
     this->name = name;
     this->type = type;
-    this->effectValue = effectValue;
-    this->quantity = quantity;
+    this->effectValue = max(0, effectValue);
+    this->quantity = max(0, quantity);
 }
 
 int Item::use() {
@@ -28,7 +30,7 @@ int Item::use() {
     return effectValue;
 }
 
-void Item::showInfo() {
+void Item::showInfo() const {
     cout << name
          << " | Type: " << type
          << " | Effect: " << effectValue
@@ -36,38 +38,38 @@ void Item::showInfo() {
          << endl;
 }
 
-bool Item::isAvailable() {
+bool Item::isAvailable() const {
     return quantity > 0;
 }
 
-string Item::getName() {
+string Item::getName() const {
     return name;
 }
 
-string Item::getType() {
+string Item::getType() const {
     return type;
 }
 
-int Item::getEffectValue() {
+int Item::getEffectValue() const {
     return effectValue;
 }
 
-int Item::getQuantity() {
+int Item::getQuantity() const {
     return quantity;
 }
 
-void Item::setName(string name) {
+void Item::setName(const string& name) {
     this->name = name;
 }
 
-void Item::setType(string type) {
+void Item::setType(const string& type) {
     this->type = type;
 }
 
 void Item::setEffectValue(int effectValue) {
-    this->effectValue = effectValue;
+    this->effectValue = max(0, effectValue);
 }
 
 void Item::setQuantity(int quantity) {
-    this->quantity = quantity;
+    this->quantity = max(0, quantity);
 }
