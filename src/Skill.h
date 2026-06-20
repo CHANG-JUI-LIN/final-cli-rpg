@@ -1,24 +1,30 @@
 #ifndef SKILL_H
-#define SKILL_h
-#include<iostream>
-#include<string>
+#define SKILL_H
 
-class Skill
-{
+#include <string>
+
+using namespace std;
+
+class Skill {
 private:
-    std::string name;
+    string name;
     int damage;
     int mpCost;
+
 public:
     Skill();
-    ~Skill();
+    Skill(string name, int damage, int mpCost);
 
-    void use();
+    int use();
     void showInfo();
     int getDamage();
+
+    string getName();
+    int getMpCost();
+
+    void setName(string name);
+    void setDamage(int damage);
+    void setMpCost(int mpCost);
 };
-
-
-
 
 #endif
