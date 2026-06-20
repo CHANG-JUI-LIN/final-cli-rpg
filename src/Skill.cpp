@@ -18,14 +18,13 @@ Skill::Skill(const string& name, int damage, int mpCost) {
 }
 
 int Skill::use() const {
-    // A skill only reports its damage. The battle flow applies this value to the monster.
+    // The battle flow applies this returned damage to the monster.
     cout << "Used skill: " << name << endl;
     cout << "Skill damage: " << damage << endl;
     return damage;
 }
 
 void Skill::showInfo() const {
-    // Display the information needed when the player chooses a skill.
     cout << name
          << " | Damage: " << damage
          << " | MP Cost: " << mpCost
@@ -49,11 +48,9 @@ void Skill::setName(const string& name) {
 }
 
 void Skill::setDamage(int damage) {
-    // Damage should not be negative in the battle system.
     this->damage = max(0, damage);
 }
 
 void Skill::setMpCost(int mpCost) {
-    // MP cost should not be negative.
     this->mpCost = max(0, mpCost);
 }
