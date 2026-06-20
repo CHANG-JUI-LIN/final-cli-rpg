@@ -7,22 +7,30 @@ using namespace std;
 
 class Skill {
 private:
+    // Skill name shown in the battle menu.
     string name;
+
+    // Damage dealt when the skill is used.
     int damage;
+
+    // MP required to cast this skill.
     int mpCost;
 
 public:
     Skill();
-    Skill(string name, int damage, int mpCost);
+    Skill(const string& name, int damage, int mpCost);
 
-    int use();
-    void showInfo();
-    int getDamage();
+    // Use the skill and return its damage value.
+    int use() const;
 
-    string getName();
-    int getMpCost();
+    // Print skill details for the player.
+    void showInfo() const;
 
-    void setName(string name);
+    int getDamage() const;
+    string getName() const;
+    int getMpCost() const;
+
+    void setName(const string& name);
     void setDamage(int damage);
     void setMpCost(int mpCost);
 };
