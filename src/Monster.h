@@ -1,28 +1,35 @@
 #ifndef MONSTER_H
 #define MONSTER_H
 
-#include<iostream>
-#include<string>
+#include <string>
 
-class Monster
-{
+using namespace std;
+
+class Monster {
 private:
-    std::string name;
+    string name;
     int hp;
     int attackPower;
     int rewardGold;
 
 public:
-    Monster(/* args */);
-    ~Monster();
+    Monster();
+    Monster(string name, int hp, int attackPower, int rewardGold);
 
     int attack();
-    int takeDamage();
+    void takeDamage(int damage);
     bool isAlive();
     void showInfo();
+
+    string getName();
+    int getHp();
+    int getAttackPower();
+    int getRewardGold();
+
+    void setName(string name);
+    void setHp(int hp);
+    void setAttackPower(int attackPower);
+    void setRewardGold(int rewardGold);
 };
-
-
-
 
 #endif
