@@ -1,11 +1,12 @@
 #include <iostream>
-#include <vector>
-#include <string>
 #include <limits>
-#include "Player.h"
-#include "Monster.h"
-#include "Skill.h"
+#include <string>
+#include <vector>
+
 #include "Item.h"
+#include "Monster.h"
+#include "Player.h"
+#include "Skill.h"
 
 using namespace std;
 
@@ -39,8 +40,8 @@ int main() {
         playerName = "Hero";
     }
 
+    // Create the player and prepare basic skills/items.
     Player player(playerName, 120, 50, 18);
-
     player.addSkill(Skill("Fire Ball", 30, 10));
     player.addSkill(Skill("Thunder Strike", 45, 18));
 
@@ -48,6 +49,7 @@ int main() {
     player.addItem(Item("Mana Potion", "mp", 20, 2));
     player.addItem(Item("Power Stone", "attack", 5, 1));
 
+    // The game uses a simple stage list. Defeat all monsters to win.
     vector<Monster> monsters;
     monsters.push_back(Monster("Slime", 60, 10, 20));
     monsters.push_back(Monster("Goblin", 90, 15, 35));
@@ -55,9 +57,9 @@ int main() {
 
     cout << endl;
     cout << "Welcome, " << player.getName() << "!" << endl;
-    cout << "You need to defeat all monsters to win the game." << endl;
+    cout << "Defeat all monsters to win the game." << endl;
 
-    for (int i = 0; i < monsters.size(); i++) {
+    for (int i = 0; i < static_cast<int>(monsters.size()); i++) {
         Monster& monster = monsters[i];
 
         cout << endl;
