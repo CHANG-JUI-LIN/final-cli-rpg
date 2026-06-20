@@ -1,4 +1,6 @@
 #include "Monster.h"
+
+#include <algorithm>
 #include <iostream>
 
 using namespace std;
@@ -10,34 +12,29 @@ Monster::Monster() {
     rewardGold = 10;
 }
 
-Monster::Monster(string name, int hp, int attackPower, int rewardGold) {
+Monster::Monster(const string& name, int hp, int attackPower, int rewardGold) {
     this->name = name;
-    this->hp = hp;
-    this->attackPower = attackPower;
-    this->rewardGold = rewardGold;
+    this->hp = max(0, hp);
+    this->attackPower = max(0, attackPower);
+    this->rewardGold = max(0, rewardGold);
 }
 
-int Monster::attack() {
+int Monster::attack() const {
     cout << name << " attacks!" << endl;
     cout << "Damage: " << attackPower << endl;
     return attackPower;
 }
 
 void Monster::takeDamage(int damage) {
-    hp -= damage;
-
-    if (hp < 0) {
-        hp = 0;
-    }
-
+    hp = max(0, hp - max(0, damage));
     cout << name << " took " << damage << " damage." << endl;
 }
 
-bool Monster::isAlive() {
+bool Monster::isAlive() const {
     return hp > 0;
 }
 
-void Monster::showInfo() {
+void Monster::showInfo() const {
     cout << endl;
     cout << "----- Monster Info -----" << endl;
     cout << "Name: " << name << endl;
@@ -47,34 +44,34 @@ void Monster::showInfo() {
     cout << "------------------------" << endl;
 }
 
-string Monster::getName() {
+string Monster::getName() const {
     return name;
 }
 
-int Monster::getHp() {
+int Monster::getHp() const {
     return hp;
 }
 
-int Monster::getAttackPower() {
+int Monster::getAttackPower() const {
     return attackPower;
 }
 
-int Monster::getRewardGold() {
+int Monster::getRewardGold() const {
     return rewardGold;
 }
 
-void Monster::setName(string name) {
+void Monster::setName(const string& name) {
     this->name = name;
 }
 
 void Monster::setHp(int hp) {
-    this->hp = hp;
+    this->hp = max(0, hp);
 }
 
 void Monster::setAttackPower(int attackPower) {
-    this->attackPower = attackPower;
+    this->attackPower = max(0, attackPower);
 }
 
 void Monster::setRewardGold(int rewardGold) {
-    this->rewardGold = rewardGold;
+    this->rewardGold = max(0, rewardGold);
 }
