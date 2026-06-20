@@ -1,6 +1,7 @@
 #include "Player.h"
-#include <iostream>
+
 #include <algorithm>
+#include <iostream>
 
 using namespace std;
 
@@ -14,30 +15,29 @@ Player::Player() {
     gold = 0;
 }
 
-Player::Player(string name, int hp, int mp, int attackPower) {
+Player::Player(const string& name, int hp, int mp, int attackPower) {
     this->name = name;
-    this->hp = hp;
-    this->maxHp = hp;
-    this->mp = mp;
-    this->maxMp = mp;
-    this->attackPower = attackPower;
+    this->hp = max(1, hp);
+    this->maxHp = this->hp;
+    this->mp = max(0, mp);
+    this->maxMp = this->mp;
+    this->attackPower = max(0, attackPower);
     this->gold = 0;
 }
 
-int Player::attack() {
+int Player::attack() const {
     cout << name << " uses normal attack!" << endl;
     cout << "Damage: " << attackPower << endl;
     return attackPower;
 }
 
 int Player::useSkill(int index) {
-    if (index < 0 || index >= skills.size()) {
+    if (index < 0 || index >= static_cast<int>(skills.size())) {
         cout << "Invalid skill number." << endl;
         return 0;
     }
 
-    Skill& skill = skills[index];
-
+    const Skill& skill = skills[index];
     if (mp < skill.getMpCost()) {
         cout << "Not enough MP!" << endl;
         return 0;
@@ -48,44 +48,29 @@ int Player::useSkill(int index) {
 }
 
 void Player::takeDamage(int damage) {
-    hp -= damage;
-
-    if (hp < 0) {
-        hp = 0;
-    }
-
+    hp = max(0, hp - max(0, damage));
     cout << name << " took " << damage << " damage." << endl;
 }
 
 void Player::useItem(int index) {
-    if (index < 0 || index >= items.size()) {
+    if (index < 0 || index >= static_cast<int>(items.size())) {
         cout << "Invalid item number." << endl;
         return;
     }
 
     Item& item = items[index];
-
     if (!item.isAvailable()) {
         cout << "This item is not available." << endl;
         return;
     }
 
     int value = item.use();
-
     if (item.getType() == "heal") {
-        hp += value;
-        if (hp > maxHp) {
-            hp = maxHp;
-        }
-
+        hp = min(maxHp, hp + value);
         cout << "Recovered HP: " << value << endl;
     }
     else if (item.getType() == "mp") {
-        mp += value;
-        if (mp > maxMp) {
-            mp = maxMp;
-        }
-
+        mp = min(maxMp, mp + value);
         cout << "Recovered MP: " << value << endl;
     }
     else if (item.getType() == "attack") {
@@ -97,19 +82,19 @@ void Player::useItem(int index) {
     }
 }
 
-bool Player::isAlive() {
+bool Player::isAlive() const {
     return hp > 0;
 }
 
-void Player::addItem(Item item) {
+void Player::addItem(const Item& item) {
     items.push_back(item);
 }
 
-void Player::addSkill(Skill skill) {
+void Player::addSkill(const Skill& skill) {
     skills.push_back(skill);
 }
 
-void Player::showStatus() {
+void Player::showStatus() const {
     cout << endl;
     cout << "----- Player Status -----" << endl;
     cout << "Name: " << name << endl;
@@ -120,66 +105,64 @@ void Player::showStatus() {
     cout << "-------------------------" << endl;
 }
 
-void Player::showItems() {
+void Player::showItems() const {
     cout << endl;
     cout << "----- Item List -----" << endl;
-
-    for (int i = 0; i < items.size(); i++) {
+    for (int i = 0; i < static_cast<int>(items.size()); i++) {
         cout << i + 1 << ". ";
         items[i].showInfo();
     }
-
     cout << "---------------------" << endl;
 }
 
-void Player::showSkills() {
+void Player::showSkills() const {
     cout << endl;
     cout << "----- Skill List -----" << endl;
-
-    for (int i = 0; i < skills.size(); i++) {
+    for (int i = 0; i < static_cast<int>(skills.size()); i++) {
         cout << i + 1 << ". ";
         skills[i].showInfo();
     }
-
     cout << "----------------------" << endl;
 }
 
 void Player::gainGold(int amount) {
-    gold += amount;
+    gold += max(0, amount);
 }
 
-string Player::getName() {
+string Player::getName() const {
     return name;
 }
 
-int Player::getHp() {
+int Player::getHp() const {
     return hp;
 }
 
-int Player::getMp() {
+int Player::getMp() const {
     return mp;
 }
 
-int Player::getAttackPower() {
+int Player::getAttackPower() const {
     return attackPower;
 }
 
-int Player::getGold() {
+int Player::getGold() const {
     return gold;
 }
 
-void Player::setName(string name) {
+void Player::setName(const string& name) {
     this->name = name;
 }
 
 void Player::setHp(int hp) {
-    this->hp = hp;
+    this->hp = max(0, hp);
+    this->maxHp = max(this->maxHp, this->hp);
 }
 
 void Player::setMp(int mp) {
-    this->mp = mp;
+    this->mp = max(0, mp);
+    this->maxMp = max(this->maxMp, this->mp);
 }
 
 void Player::setAttackPower(int attackPower) {
-    this->attackPower = attackPower;
+    this->attackPower = max(0, attackPower);
 }
