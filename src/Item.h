@@ -1,24 +1,34 @@
 #ifndef ITEM_H
 #define ITEM_H
 
-#include<iostream>
-#include<string>
-class Item
-{
+#include <string>
+
+using namespace std;
+
+class Item {
 private:
-    std::string name;
-    std::string type;
-    int effectValue ;
+    string name;
+    string type;
+    int effectValue;
     int quantity;
+
 public:
     Item();
-    ~Item();
-    void use();
+    Item(string name, string type, int effectValue, int quantity);
+
+    int use();
     void showInfo();
     bool isAvailable();
+
+    string getName();
+    string getType();
+    int getEffectValue();
+    int getQuantity();
+
+    void setName(string name);
+    void setType(string type);
+    void setEffectValue(int effectValue);
+    void setQuantity(int quantity);
 };
 
-
-
-
-#endif 
+#endif
