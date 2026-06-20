@@ -7,26 +7,40 @@ using namespace std;
 
 class Monster {
 private:
+    // Monster name shown during battle.
     string name;
+
+    // Current monster health.
     int hp;
+
+    // Fixed damage dealt by a normal monster attack.
     int attackPower;
+
+    // Gold given to the player after this monster is defeated.
     int rewardGold;
 
 public:
     Monster();
-    Monster(string name, int hp, int attackPower, int rewardGold);
+    Monster(const string& name, int hp, int attackPower, int rewardGold);
 
-    int attack();
+    // Return monster attack damage.
+    int attack() const;
+
+    // Reduce monster HP after the player attacks.
     void takeDamage(int damage);
-    bool isAlive();
-    void showInfo();
 
-    string getName();
-    int getHp();
-    int getAttackPower();
-    int getRewardGold();
+    // Check whether the monster can continue fighting.
+    bool isAlive() const;
 
-    void setName(string name);
+    // Display current monster information.
+    void showInfo() const;
+
+    string getName() const;
+    int getHp() const;
+    int getAttackPower() const;
+    int getRewardGold() const;
+
+    void setName(const string& name);
     void setHp(int hp);
     void setAttackPower(int attackPower);
     void setRewardGold(int rewardGold);
