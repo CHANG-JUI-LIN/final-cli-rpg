@@ -20,6 +20,10 @@ private:
     int attackPower;
     int gold;
 
+    // Combo system.
+    int comboCount;
+    int maxCombo;
+
     // Player inventory and learned skills.
     vector<Item> items;
     vector<Skill> skills;
@@ -49,6 +53,13 @@ public:
     void showItems() const;
     void showSkills() const;
     void gainGold(int amount);
+
+    void addCombo();
+    void resetCombo();
+    bool isComboFull() const;
+    int releaseFinisher();
+    int getComboCount() const;
+    void showCombo() const;
 
     string getName() const;
     int getHp() const;

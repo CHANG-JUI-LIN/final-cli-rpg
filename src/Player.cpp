@@ -13,6 +13,8 @@ Player::Player() {
     maxMp = 30;
     attackPower = 15;
     gold = 0;
+    comboCount = 0;
+    maxCombo = 5;
 }
 
 Player::Player(const string& name, int hp, int mp, int attackPower) {
@@ -23,6 +25,8 @@ Player::Player(const string& name, int hp, int mp, int attackPower) {
     this->maxMp = this->mp;
     this->attackPower = max(0, attackPower);
     this->gold = 0;
+    this->comboCount = 0;
+    this->maxCombo = 5;
 }
 
 int Player::attack() const {
@@ -123,6 +127,50 @@ void Player::showSkills() const {
         skills[i].showInfo();
     }
     cout << "----------------------" << endl;
+}
+
+void Player::addCombo() {
+    if (comboCount < maxCombo) {
+        comboCount++;
+    }
+    cout << "🔥 Combo x" << comboCount << "!" << endl;
+}
+
+void Player::resetCombo() {
+    if (comboCount > 0) {
+        cout << "Combo broken!" << endl;
+    }
+    comboCount = 0;
+}
+
+bool Player::isComboFull() const {
+    return comboCount >= maxCombo;
+}
+
+int Player::releaseFinisher() {
+    cout << endl;
+    cout << "===== FINISHER STRIKE =====" << endl;
+    cout << name << " releases the ultimate attack!" << endl;
+    int damage = 60;
+    cout << "Damage: " << damage << endl;
+    cout << "===========================" << endl;
+    comboCount = 0;
+    return damage;
+}
+
+int Player::getComboCount() const {
+    return comboCount;
+}
+
+void Player::showCombo() const {
+    if (comboCount > 0) {
+        cout << "🔥 Combo x" << comboCount << " [";
+        for (int i = 0; i < maxCombo; i++) {
+            if (i < comboCount) cout << "|";
+            else cout << "·";
+        }
+        cout << "]" << endl;
+    }
 }
 
 void Player::gainGold(int amount) {

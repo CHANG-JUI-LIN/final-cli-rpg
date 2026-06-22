@@ -71,6 +71,7 @@ int main() {
         while (player.isAlive() && monster.isAlive()) {
             cout << endl;
             player.showStatus();
+            player.showCombo();
             monster.showInfo();
 
             cout << endl;
@@ -79,6 +80,9 @@ int main() {
             cout << "2. Use Skill" << endl;
             cout << "3. Use Item" << endl;
             cout << "4. Show Status" << endl;
+            if (player.isComboFull()) {
+                cout << "5. 🔥 Release Finisher" << endl;
+            }
             cout << "Enter number: ";
 
             int choice = getChoice();
@@ -86,6 +90,7 @@ int main() {
             if (choice == 1) {
                 int damage = player.attack();
                 monster.takeDamage(damage);
+                player.addCombo();
             }
             else if (choice == 2) {
                 player.showSkills();
@@ -95,6 +100,7 @@ int main() {
                 int damage = player.useSkill(skillIndex - 1);
                 if (damage > 0) {
                     monster.takeDamage(damage);
+                    player.addCombo();
                 }
                 else {
                     continue;
@@ -106,11 +112,17 @@ int main() {
                 int itemIndex = getChoice();
 
                 player.useItem(itemIndex - 1);
+                player.resetCombo();
                 continue;
             }
             else if (choice == 4) {
                 player.showStatus();
+                player.resetCombo();
                 continue;
+            }
+            else if (choice == 5 && player.isComboFull()) {
+                int damage = player.releaseFinisher();
+                monster.takeDamage(damage);
             }
             else {
                 cout << "Invalid input. Please choose again." << endl;
